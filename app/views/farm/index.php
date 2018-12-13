@@ -35,36 +35,38 @@ and open the template in the editor.
             </div>
             <br/>
 
-            <h2>Feed Table</h2>
+            <h2>Game Status :- <?= $data['game_status'] ?></h2>
+            <h4>Total Round:- <?= count($data['record']) ?></h4>
+            <input type="hidden" class="game_status" value="<?= $data['game_status'] ?>"/>
 
             <table class="table table-bordered feed_table">
                 <thead>
                     <tr>
                         <th><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/time.png" alt="Round"/></th>
-                        <th><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/farmer.png" alt="Famer"/></th>
-                        <th><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/cow.png" alt="Cow 1"/>1</th>
-                        <th><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/cow.png" alt="Cow 2"/>2</th>
-                        <th><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/bunny.png" alt="Bunny 1"/>1</th>
-                        <th><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/bunny.png" alt="Bunny 2"/>2</th>
-                        <th><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/bunny.png" alt="Bunny 3"/>3</th>
-                        <th><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/bunny.png" alt="Bunny 4"/>4</th>
+                        <th style="<?= (in_array('FARMER', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/farmer.png" alt="Famer"/></th>
+                        <th style="<?= (in_array('COW_1', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/cow.png" alt="Cow 1"/>1</th>
+                        <th style="<?= (in_array('COW_2', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/cow.png" alt="Cow 2"/>2</th>
+                        <th style="<?= (in_array('BUNNY_1', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/bunny.png" alt="Bunny 1"/>1</th>
+                        <th style="<?= (in_array('BUNNY_2', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/bunny.png" alt="Bunny 2"/>2</th>
+                        <th style="<?= (in_array('BUNNY_3', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/bunny.png" alt="Bunny 3"/>3</th>
+                        <th style="<?= (in_array('BUNNY_4', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $_SERVER['REQUEST_URI'] ?>/images/bunny.png" alt="Bunny 4"/>4</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    if (!empty($data)) {
-                        foreach ($data as $round => $fedLife) {
+                    if (!empty($data['record'])) {
+                        foreach ($data['record'] as $round => $fedLife) {
                             $image = '<img style="height:50px;width:50px;" src="' . $_SERVER['REQUEST_URI'] . '/images/food.png" alt="Fed"/>';
                             ?>
                             <tr>
                                 <td><?= $round + 1 ?></td>
-                                <td><?= ($fedLife == "FARMER") ? $image : "" ?></td>
-                                <td><?= ($fedLife == "COW_1") ? $image : "" ?></td>
-                                <td><?= ($fedLife == "COW_2") ? $image : "" ?></td>
-                                <td><?= ($fedLife == "BUNNY_1") ? $image : "" ?></td>
-                                <td><?= ($fedLife == "BUNNY_2") ? $image : "" ?></td>
-                                <td><?= ($fedLife == "BUNNY_3") ? $image : "" ?></td>
-                                <td><?= ($fedLife == "BUNNY_4") ? $image : "" ?></td>
+                                <td style="<?= (in_array('FARMER', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "FARMER") ? $image : "" ?></td>
+                                <td style="<?= (in_array('COW_1', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "COW_1") ? $image : "" ?></td>
+                                <td style="<?= (in_array('COW_2', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "COW_2") ? $image : "" ?></td>
+                                <td style="<?= (in_array('BUNNY_1', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_1") ? $image : "" ?></td>
+                                <td style="<?= (in_array('BUNNY_2', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_2") ? $image : "" ?></td>
+                                <td style="<?= (in_array('BUNNY_3', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_3") ? $image : "" ?></td>
+                                <td style="<?= (in_array('BUNNY_4', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_4") ? $image : "" ?></td>
                             </tr>  
                             <?php
                         }

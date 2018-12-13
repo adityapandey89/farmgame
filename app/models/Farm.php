@@ -5,7 +5,8 @@ class Farm {
     public $farm_life = ['FARMER', 'COW_1', 'COW_2', 'BUNNY_1', 'BUNNY_2', 'BUNNY_3', 'BUNNY_4'];
     public $fedLife;
     public $gameStatus;
-    protected $db;
+    public $db;
+    public $round;
 
     const TOTALFEED = 50;
     const FARMERFEEDTIME = 15;
@@ -19,16 +20,15 @@ class Farm {
 
     public function randomFeed() {
 
-        $this->gameStatus = self::PROGRESS;
         $tempData = [];
         $newData = [];
         $finalData = [];
         $this->db = new Database();
         $totalRound = !($this->db->getTotalRound()) ? 0 : count($this->db->getTotalRound());
         $totalRound++;
+        $this->round = $totalRound;
+        $this->checkFedStatus();
         $this->fedLife = array_rand($this->farm_life);
-
-        $this->checkFedStatus($totalRound);
 
         $newData[$totalRound] = $this->farm_life[$this->fedLife];
         $tempData = $this->db->getRecord();
@@ -36,15 +36,18 @@ class Farm {
         $this->db->data = $tempData;
         $this->db->addRecord();
 
-        if ($totalRound == self::TOTALFEED)
-            if ($this->checkWin()) {
-                $this->gameStatus = self::WON;
-            } else {
-                $this->gameStatus = self::LOST;
-            }
+        if (!$this->checkWin()) {
+            $this->gameStatus = self::LOST;
+            return;
+        }
+
+        if ($totalRound == self::TOTALFEED) {
+            $this->gameStatus = self::WON;
+            return;
+        }
     }
 
-    public function checkFedStatus($round) {
+    public function checkFedStatus() {
         foreach ($this->farm_life as $life) {
             $this->checkLiveStatus($life);
         }
@@ -57,38 +60,48 @@ class Farm {
 
     public function checkLiveStatus($life) {
 
+        $this->gameStatus = self::PROGRESS;
         $record = $this->db->getRecord();
         $record = array_map(function($d) {
             return $d[key($d)];
         }, $record);
 
+        if (!$this->checkWin()) {
+            $this->gameStatus = self::LOST;
+            return true;
+        }
+        if ($this->round >= (int) self::TOTALFEED) {
+            $this->gameStatus = self::WON;
+            return true;
+        }
+
         if (!in_array($life, $record)) {
-            if (preg_match("/FARMER/", $life) && count($record) > 15) {
+            if (preg_match("/FARMER/", $life) && $this->round > (15 * ($this->round / 15))) {
                 unset($this->farm_life[0]);
                 $this->gameStatus = self::LOST;
-                return;
+                return false;
             }
-            if (preg_match("/COW_1/", $life) && count($record) > 10) {
+            if (preg_match("/COW_1/", $life) && $this->round > (10 * ($this->round / 10))) {
                 unset($this->farm_life[1]);
-                return;
+                return false;
             }
-            if (preg_match("/COW_2/", $life) && count($record) > 10) {
+            if (preg_match("/COW_2/", $life) && $this->round > (10 * ($this->round / 10))) {
                 unset($this->farm_life[2]);
-                return;
+                return false;
             }
-            if (preg_match("/BUNNY_1/", $life) && count($record) > 8) {
+            if (preg_match("/BUNNY_1/", $life) && $this->round > (8 * ($this->round / 8))) {
                 unset($this->farm_life[3]);
-                return;
+                return false;
             }
-            if (preg_match("/BUNNY_2/", $life) && count($record) > 8) {
+            if (preg_match("/BUNNY_2/", $life) && $this->round > (8 * ($this->round / 8))) {
                 unset($this->farm_life[4]);
-                return;
+                return false;
             }
-            if (preg_match("/BUNNY_3/", $life) && count($record) > 8) {
+            if (preg_match("/BUNNY_3/", $life) && $this->round > (8 * ($this->round / 8))) {
                 unset($this->farm_life[5]);
-                return;
+                return TRUE;
             }
-            if (preg_match("/BUNNY_4/", $life) && count($record) > 8) {
+            if (preg_match("/BUNNY_4/", $life) && $this->round > (8 * ($this->round / 8))) {
                 unset($this->farm_life[6]);
                 return;
             }
@@ -107,10 +120,10 @@ class Farm {
         if (!in_array("FARMER", $this->farm_life)) {
             return FALSE;
         }
-        if (!in_array(["COW_1", "COW_2"], $this->farm_life)) {
+        if (!in_array("COW_1", $this->farm_life) && !in_array("COW_2", $this->farm_life)) {
             return FALSE;
         }
-        if (!in_array(["BUNNY_1", "BUNNY_2", "BUNNY_3", "BUNNY_4"], $this->farm_life)) {
+        if (!in_array("BUNNY_1", $this->farm_life) && !in_array("BUNNY_2", $this->farm_life) && !in_array("BUNNY_4", $this->farm_life) && !in_array("BUNNY_4", $this->farm_life)) {
             return FALSE;
         }
         return true;

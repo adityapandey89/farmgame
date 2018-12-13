@@ -3,12 +3,24 @@
 class FarmController extends DefaultController {
 
     public function index() {
-        $db = new Database();
-        $record = $db->getRecord();
+
+        $finalRecord = [];
+        $farm = $this->model('Farm');
+        $farm->db = new Database();
+        $record = $farm->db->getRecord();
         $record = array_map(function($d) {
             return $d[key($d)];
         }, $record);
-        $this->view('farm/index', $record);
+
+        $tempLife = [];
+        $farm->round = count($record);
+        foreach ($farm->farm_life as $life) {
+            $tempLife[] = !($farm->checkLiveStatus($life)) ? $life : "";
+        }
+        $finalRecord['record'] = $record;
+        $finalRecord['life'] = array_filter($tempLife);
+        $finalRecord['game_status'] = $farm->gameStatus;
+        $this->view('farm/index', $finalRecord);
     }
 
     public function feed() {
@@ -17,10 +29,8 @@ class FarmController extends DefaultController {
         $farm->randomFeed();
         if ($farm->gameStatus == Farm::PROGRESS) {
             echo json_encode([$farm->fedLife, count($db->getRecord())]);
-        } else if ($farm->gameStatus == Farm::WON) {
-            
-        } else if ($farm->gameStatus == Farm::WON) {
-            
+        } else {
+            echo $farm->gameStatus;
         }
     }
 
