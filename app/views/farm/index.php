@@ -6,6 +6,9 @@
 -->
 <?php
 $uri = $_SERVER['REQUEST_URI'];
+//echo "<pre>";
+//print_r($data);
+//die;
 ?>
 <html>
     <head>
@@ -46,13 +49,13 @@ $uri = $_SERVER['REQUEST_URI'];
                 <thead>
                     <tr>
                         <th><img src="<?= $uri ?>/images/time.png" alt="Round"/></th>
-                        <th style="<?= (in_array('FARMER', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/farmer.png" alt="Famer"/></th>
-                        <th style="<?= (in_array('COW_1', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/cow.png" alt="Cow 1"/>1</th>
-                        <th style="<?= (in_array('COW_2', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/cow.png" alt="Cow 2"/>2</th>
-                        <th style="<?= (in_array('BUNNY_1', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/bunny.png" alt="Bunny 1"/>1</th>
-                        <th style="<?= (in_array('BUNNY_2', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/bunny.png" alt="Bunny 2"/>2</th>
-                        <th style="<?= (in_array('BUNNY_3', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/bunny.png" alt="Bunny 3"/>3</th>
-                        <th style="<?= (in_array('BUNNY_4', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/bunny.png" alt="Bunny 4"/>4</th>
+                        <th style="<?= (in_array('FARMER', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/farmer.png" alt="Famer"/></th>
+                        <th style="<?= (in_array('COW_1', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/cow.png" alt="Cow 1"/>1</th>
+                        <th style="<?= (in_array('COW_2', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/cow.png" alt="Cow 2"/>2</th>
+                        <th style="<?= (in_array('BUNNY_1', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/bunny.png" alt="Bunny 1"/>1</th>
+                        <th style="<?= (in_array('BUNNY_2', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/bunny.png" alt="Bunny 2"/>2</th>
+                        <th style="<?= (in_array('BUNNY_3', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/bunny.png" alt="Bunny 3"/>3</th>
+                        <th style="<?= (in_array('BUNNY_4', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><img src="<?= $uri ?>/images/bunny.png" alt="Bunny 4"/>4</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,13 +66,13 @@ $uri = $_SERVER['REQUEST_URI'];
                             ?>
                             <tr>
                                 <td><?= $round + 1 ?></td>
-                                <td style="<?= (in_array('FARMER', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "FARMER") ? $image : "" ?></td>
-                                <td style="<?= (in_array('COW_1', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "COW_1") ? $image : "" ?></td>
-                                <td style="<?= (in_array('COW_2', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "COW_2") ? $image : "" ?></td>
-                                <td style="<?= (in_array('BUNNY_1', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_1") ? $image : "" ?></td>
-                                <td style="<?= (in_array('BUNNY_2', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_2") ? $image : "" ?></td>
-                                <td style="<?= (in_array('BUNNY_3', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_3") ? $image : "" ?></td>
-                                <td style="<?= (in_array('BUNNY_4', $data['life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_4") ? $image : "" ?></td>
+                                <td style="<?= (in_array('FARMER', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "FARMER") ? $image : "" ?></td>
+                                <td style="<?= (in_array('COW_1', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "COW_1") ? $image : "" ?></td>
+                                <td style="<?= (in_array('COW_2', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "COW_2") ? $image : "" ?></td>
+                                <td style="<?= (in_array('BUNNY_1', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_1") ? $image : "" ?></td>
+                                <td style="<?= (in_array('BUNNY_2', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_2") ? $image : "" ?></td>
+                                <td style="<?= (in_array('BUNNY_3', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_3") ? $image : "" ?></td>
+                                <td style="<?= (in_array('BUNNY_4', $data['dead_life'])) ? 'background-color:#F05F5F' : ""; ?>"><?= ($fedLife == "BUNNY_4") ? $image : "" ?></td>
                             </tr>  
                             <?php
                         }

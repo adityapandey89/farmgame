@@ -11,20 +11,25 @@ class FarmController extends DefaultController {
     public function index() {
 
         $finalRecord = [];
-        $farm = $this->model('Farm');
-        $farm->db = new Database();
-        $record = $farm->db->getRecord();
-        $record = array_map(function($d) {
-            return $d[key($d)];
-        }, $record);
 
-        $tempLife = [];
-        $farm->round = !(count($record)) ? 1 : count($record);
-        foreach ($farm->farm_life as $life) {
-            $tempLife[] = !($farm->checkLiveStatus($life)) ? $life : "";
-        }
-        $finalRecord['record'] = $record;
-        $finalRecord['life'] = array_filter($tempLife);
+        $farm = $this->model('Farm');
+
+        $farm->db = new Database();
+        $fedRecord = $farm->db->getRecord();
+        $fedRecord = array_map(function($d) {
+            return $d[key($d)];
+        }, $fedRecord);
+
+        $deathRecord = $farm->db->getDeathRecord();
+        $deathRecord = array_map(function($d) {
+            return $d[key($d)];
+        }, $deathRecord);
+
+        $farm->round = !(count($fedRecord)) ? 1 : count($fedRecord);
+        $farm->checkFedStatus();
+
+        $finalRecord['record'] = $fedRecord;
+        $finalRecord['dead_life'] = $deathRecord;
         $finalRecord['game_status'] = $farm->gameStatus;
         $this->view('farm/index', $finalRecord);
     }

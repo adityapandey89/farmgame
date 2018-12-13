@@ -32,17 +32,22 @@ class Farm {
 
     public function randomFeed() {
 
-        $tempData = [];
+        $this->gameStatus = self::PROGRESS;
         $newData = [];
         $rnd = $this->db->getTotalRound();
-        $this->round = !($rnd) ? 1 : count($rnd);
+        $deadLife = $this->db->getDeathRecord();
+        $deadLife = array_map(function($d) {
+            return $d[key($d)];
+        }, $deadLife);
+
+        $this->farm_life = array_diff($this->farm_life, $deadLife);
+        $this->round = !($rnd) ? 1 : count($rnd) + 1;
         $this->checkFedStatus();
+
         $this->fedLife = array_rand($this->farm_life);
 
         $newData[$this->round] = $this->farm_life[$this->fedLife];
-        $tempData = $this->db->getRecord();
-        array_push($tempData, $newData);
-        $this->db->data = $tempData;
+        $this->db->data = $newData;
         $this->db->addRecord();
 
         if (!$this->checkWin()) {
@@ -69,12 +74,6 @@ class Farm {
 
     public function checkLiveStatus($life) {
 
-        $this->gameStatus = self::PROGRESS;
-        $record = $this->db->getRecord();
-        $mappedRecord = array_map(function($d) {
-            return $d[key($d)];
-        }, $record);
-
         if (!$this->checkWin()) {
             $this->gameStatus = self::LOST;
             return true;
@@ -84,25 +83,46 @@ class Farm {
             return true;
         }
 
-        if (!in_array($life, $mappedRecord)) {
-            if (preg_match("/FARMER/", $life) && $this->round >= (self::FARMERFEEDTIME * ceil($this->round / self::FARMERFEEDTIME))) {
-                unset($this->farm_life[0]);
+        if (preg_match("/FARMER/", $life) && $this->round >= (self::FARMERFEEDTIME * ($this->round / self::FARMERFEEDTIME))) {
+            if ($this->checkIfDead($life, self::FARMERFEEDTIME))
                 $this->gameStatus = self::LOST;
-                return false;
-            }
-            if (preg_match("/COW_(\d+)/", $life) && $this->round >= (self::COWFEEDTIME * ceil($this->round / self::COWFEEDTIME))) {
-                $key = array_search(trim($life), $this->farm_life);
-                unset($this->farm_life[$key]);
-                return false;
-            }
-            if (preg_match("/BUNNY_(\d+)/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
-                $key = array_search(trim($life), $this->farm_life);
-                unset($this->farm_life[$key]);
-                return false;
-            }
-        } else {
-            return true;
         }
+        if (preg_match("/COW_(\d+)/", $life) && $this->round >= (self::COWFEEDTIME * ($this->round / self::COWFEEDTIME))) {
+            $this->checkIfDead($life, self::COWFEEDTIME);
+        }
+        if (preg_match("/BUNNY_(\d+)/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ($this->round / self::BUNNIESFEEDTIME))) {
+            $this->checkIfDead($life, self::BUNNIESFEEDTIME);
+        }
+    }
+
+    public function checkIfDead($life, $time) {
+
+        if ($this->round > 1) {
+
+            $record = $this->db->getRecord();
+            $record = array_map(function($d) {
+                return $d[key($d)];
+            }, $record);
+            krsort($record);
+
+            if (!in_array($life, $record)) {
+                if (($this->round - $time) < 1) {
+                    $newData[$this->round] = $life;
+                    $this->db->death = $newData;
+                    $this->db->addDeathRecord();
+                    return true;
+                }
+            } else {
+                $key = array_search($life, $record) + 1;
+                if (($this->round - $key) >= $time) {
+                    $newData[$this->round] = $life;
+                    $this->db->death = $newData;
+                    $this->db->addDeathRecord();
+                    return true;
+                }
+            }
+        }
+        return FALSE;
     }
 
     /*
