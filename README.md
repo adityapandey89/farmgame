@@ -2,7 +2,7 @@ ENVIRONMENT USED FOR DEVELOPMENT :- UBUNTU 18.04, PHP 7, JSON, APACHE, CHROME BR
 
 # Installation process
 
-**execute from command line**
+**Execute from command line**
 
 - $> git clone https://github.com/adityapandey89/farmgame.git
 
