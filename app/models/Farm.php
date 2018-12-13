@@ -83,14 +83,14 @@ class Farm {
             return true;
         }
 
-        if (preg_match("/FARMER/", $life) && $this->round >= (self::FARMERFEEDTIME * ($this->round / self::FARMERFEEDTIME))) {
+        if (preg_match("/FARMER/", $life) && $this->round >= (self::FARMERFEEDTIME * ceil($this->round / self::FARMERFEEDTIME))) {
             if ($this->checkIfDead($life, self::FARMERFEEDTIME))
                 $this->gameStatus = self::LOST;
         }
-        if (preg_match("/COW_(\d+)/", $life) && $this->round >= (self::COWFEEDTIME * ($this->round / self::COWFEEDTIME))) {
+        if (preg_match("/COW_(\d+)/", $life) && $this->round >= (self::COWFEEDTIME * ceil($this->round / self::COWFEEDTIME))) {
             $this->checkIfDead($life, self::COWFEEDTIME);
         }
-        if (preg_match("/BUNNY_(\d+)/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ($this->round / self::BUNNIESFEEDTIME))) {
+        if (preg_match("/BUNNY_(\d+)/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
             $this->checkIfDead($life, self::BUNNIESFEEDTIME);
         }
     }
@@ -106,7 +106,7 @@ class Farm {
             krsort($record);
 
             if (!in_array($life, $record)) {
-                if (($this->round - $time) < 1) {
+                if (($this->round - $time) <= 1) {
                     $newData[$this->round] = $life;
                     $this->db->death = $newData;
                     $this->db->addDeathRecord();
