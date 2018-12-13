@@ -82,32 +82,32 @@ class Farm {
         }
 
         if (!in_array($life, $record)) {
-            if (preg_match("/FARMER/", $life) && $this->round > (15 * ($this->round / 15))) {
+            if (preg_match("/FARMER/", $life) && $this->round >= (15 * ceil($this->round / 15))) {
                 unset($this->farm_life[0]);
                 $this->gameStatus = self::LOST;
                 return false;
             }
-            if (preg_match("/COW_1/", $life) && $this->round > (10 * ($this->round / 10))) {
+            if (preg_match("/COW_1/", $life) && $this->round >= (10 * ceil($this->round / 10))) {
                 unset($this->farm_life[1]);
                 return false;
             }
-            if (preg_match("/COW_2/", $life) && $this->round > (10 * ($this->round / 10))) {
+            if (preg_match("/COW_2/", $life) && $this->round >= (10 * ceil($this->round / 10))) {
                 unset($this->farm_life[2]);
                 return false;
             }
-            if (preg_match("/BUNNY_1/", $life) && $this->round > (8 * ($this->round / 8))) {
+            if (preg_match("/BUNNY_1/", $life) && $this->round >= (8 * ceil($this->round / 8))) {
                 unset($this->farm_life[3]);
                 return false;
             }
-            if (preg_match("/BUNNY_2/", $life) && $this->round > (8 * ($this->round / 8))) {
+            if (preg_match("/BUNNY_2/", $life) && $this->round >= (8 * ceil($this->round / 8))) {
                 unset($this->farm_life[4]);
                 return false;
             }
-            if (preg_match("/BUNNY_3/", $life) && $this->round > (8 * ($this->round / 8))) {
+            if (preg_match("/BUNNY_3/", $life) && $this->round >= (8 * ceil($this->round / 8))) {
                 unset($this->farm_life[5]);
                 return TRUE;
             }
-            if (preg_match("/BUNNY_4/", $life) && $this->round > (8 * ($this->round / 8))) {
+            if (preg_match("/BUNNY_4/", $life) && $this->round >= (8 * ceil($this->round / 8))) {
                 unset($this->farm_life[6]);
                 return;
             }
