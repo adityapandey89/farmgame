@@ -1,7 +1,4 @@
-#############################################################################################
-
 ENVIRONMENT USED FOR DEVELOPMENT :- UBUNTU 18.04, PHP 7, JSON, APACHE, CHROME BROWSER as a client
-
 
 # Installation process
 
@@ -30,9 +27,6 @@ If FARMER is dead GAME OVER YOU LOST.
 If FARMER, atleast 1 COW and 1 BUNNY alive: after 50 feed you WIN.
 
 Click New Game Button to start again.
-
-
-#############################################################################################
 
 # Farm Game
 **Objective**
