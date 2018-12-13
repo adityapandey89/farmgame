@@ -2,7 +2,7 @@ ENVIRONMENT USED FOR DEVELOPMENT :- UBUNTU 18.04, PHP 7, JSON, APACHE, CHROME BR
 
 # Installation process
 
-**execute from command line**
+**Execute from command line**
 
 - $> git clone https://github.com/adityapandey89/farmgame.git
 
@@ -17,8 +17,6 @@ ENVIRONMENT USED FOR DEVELOPMENT :- UBUNTU 18.04, PHP 7, JSON, APACHE, CHROME BR
 http://localhost/farmgame/public
 
 **How to play**
-
-- All the FARM LIFE is highlighted as RED (this is a known bug to be will be fixed).
 
 - Click on feed button.
 
