@@ -18,7 +18,7 @@ http://localhost/farmgame/public
 
 # How to Play
 
-All the FARM LIFE is highlighted as RED (this is a known bug to be will be fixed).
+All the FARM LIFE is highlighted as RED (this is a known bug need to be fixed).
 
 Click on feed button.
 
