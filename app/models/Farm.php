@@ -53,7 +53,7 @@ class Farm {
         }
         if ($this->gameStatus !== self::LOST) {
             print_r($this->farm_life);
-            die;
+//            die;
         }
     }
 
