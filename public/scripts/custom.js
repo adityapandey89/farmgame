@@ -7,10 +7,10 @@
 
 $(document).ready(function () {
     var row = '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
-
+    var request_uri = $(".request_uri").val();
     $("#feed").on("click", function () {
         var fedLife = '';
-        var feedUrl = "../../app/farm/feed";
+        var feedUrl = request_uri + "/../app/farm/feed";
         $.ajax({
             url: feedUrl,
             async: false,

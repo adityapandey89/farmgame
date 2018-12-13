@@ -4,13 +4,6 @@ class Farm {
 
     public $farm_life = ['FARMER', 'COW_1', 'COW_2', 'BUNNY_1', 'BUNNY_2', 'BUNNY_3', 'BUNNY_4'];
     public $fedLife;
-    public $farmerFedRound = [];
-    public $cow1FedRound = [];
-    public $cow2FedRound = [];
-    public $bunny1FedRound = [];
-    public $bunny2FedRound = [];
-    public $bunny3FedRound = [];
-    public $bunny4FedRound = [];
     public $gameStatus;
     protected $db;
 
@@ -36,26 +29,31 @@ class Farm {
         $this->fedLife = array_rand($this->farm_life);
 
         $this->checkFedStatus($totalRound);
+
         $newData[$totalRound] = $this->farm_life[$this->fedLife];
         $tempData = $this->db->getRecord();
         array_push($tempData, $newData);
         $this->db->data = $tempData;
         $this->db->addRecord();
 
-        if ($totalRound == self::TOTALFEED) {
-            $this->gameStatus = self::WON;
-        }
+        if ($totalRound == self::TOTALFEED)
+            if ($this->checkWin()) {
+                $this->gameStatus = self::WON;
+            } else {
+                $this->gameStatus = self::LOST;
+            }
     }
 
     public function checkFedStatus($round) {
         foreach ($this->farm_life as $life) {
             $this->checkLiveStatus($life);
         }
-        if ($this->gameStatus !== self::LOST) {
-            print_r($this->farm_life);
-//            die;
-        }
     }
+
+    /*
+     * Killing Farm Life if not fed at respective interval
+     * FARMER every 15 Interval, COWs every 10 Interval and BUNNIES every 8 Interval
+     */
 
     public function checkLiveStatus($life) {
 
@@ -97,6 +95,25 @@ class Farm {
         } else {
             return true;
         }
+    }
+
+    /*
+     * Checking if the game is over and player has won or lost
+     * Criteria :- Alive FARMER, 1 Alive COW and 1 Alive Bunny
+     */
+
+    public function checkWin() {
+
+        if (!in_array("FARMER", $this->farm_life)) {
+            return FALSE;
+        }
+        if (!in_array(["COW_1", "COW_2"], $this->farm_life)) {
+            return FALSE;
+        }
+        if (!in_array(["BUNNY_1", "BUNNY_2", "BUNNY_3", "BUNNY_4"], $this->farm_life)) {
+            return FALSE;
+        }
+        return true;
     }
 
 }

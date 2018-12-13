@@ -16,6 +16,7 @@ and open the template in the editor.
         <script src="<?= $_SERVER['REQUEST_URI'] ?>/scripts/custom.js" type="text/javascript"></script>
     </head>
     <body>
+        <input type="hidden" class="request_uri" value="<?= $_SERVER['REQUEST_URI'] ?>"/>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
