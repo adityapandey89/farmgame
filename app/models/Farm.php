@@ -44,21 +44,20 @@ class Farm {
         $this->round = !($rnd) ? 1 : count($rnd) + 1;
         $this->checkFedStatus();
 
-        $this->fedLife = array_rand($this->farm_life);
-
-        $newData[$this->round] = $this->farm_life[$this->fedLife];
-        $this->db->data = $newData;
-        $this->db->addRecord();
-
-        if (!$this->checkWin()) {
+        if (!$this->db->checkWin()) {
             $this->gameStatus = self::LOST;
-            return;
+            return false;
         }
 
         if ((int) $this->round == self::TOTALFEED) {
             $this->gameStatus = self::WON;
             return;
         }
+
+        $this->fedLife = array_rand($this->farm_life);
+        $newData[$this->round] = $this->farm_life[$this->fedLife];
+        $this->db->data = $newData;
+        $this->db->addRecord();
     }
 
     public function checkFedStatus() {
@@ -74,23 +73,24 @@ class Farm {
 
     public function checkLiveStatus($life) {
 
-        if (!$this->checkWin()) {
+        if (!$this->db->checkWin()) {
             $this->gameStatus = self::LOST;
             return true;
         }
+        $this->gameStatus = self::PROGRESS;
         if ($this->round >= (int) self::TOTALFEED) {
             $this->gameStatus = self::WON;
             return true;
         }
 
-        if (preg_match("/FARMER/", $life) && $this->round >= (self::FARMERFEEDTIME * ceil($this->round / self::FARMERFEEDTIME))) {
+        if (preg_match("/FARMER/", $life) && ($this->round <= (self::FARMERFEEDTIME * floor($this->round / self::FARMERFEEDTIME)))) {
             if ($this->checkIfDead($life, self::FARMERFEEDTIME))
                 $this->gameStatus = self::LOST;
         }
-        if (preg_match("/COW_(\d+)/", $life) && $this->round >= (self::COWFEEDTIME * ceil($this->round / self::COWFEEDTIME))) {
+        if (preg_match("/COW_(\d+)/", $life) && ($this->round <= (self::COWFEEDTIME * floor($this->round / self::COWFEEDTIME)))) {
             $this->checkIfDead($life, self::COWFEEDTIME);
         }
-        if (preg_match("/BUNNY_(\d+)/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
+        if (preg_match("/BUNNY_(\d+)/", $life) && ($this->round <= (self::BUNNIESFEEDTIME * floor($this->round / self::BUNNIESFEEDTIME)))) {
             $this->checkIfDead($life, self::BUNNIESFEEDTIME);
         }
     }
@@ -123,25 +123,6 @@ class Farm {
             }
         }
         return FALSE;
-    }
-
-    /*
-     * Checking if the game is over and player has won or lost
-     * Criteria :- Alive FARMER, 1 Alive COW and 1 Alive Bunny
-     */
-
-    public function checkWin() {
-
-        if (!in_array("FARMER", $this->farm_life)) {
-            return FALSE;
-        }
-        if (!in_array("COW_1", $this->farm_life) && !in_array("COW_2", $this->farm_life)) {
-            return FALSE;
-        }
-        if (!in_array("BUNNY_1", $this->farm_life) && !in_array("BUNNY_2", $this->farm_life) && !in_array("BUNNY_4", $this->farm_life) && !in_array("BUNNY_4", $this->farm_life)) {
-            return FALSE;
-        }
-        return true;
     }
 
 }
