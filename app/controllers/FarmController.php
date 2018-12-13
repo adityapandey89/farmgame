@@ -24,9 +24,13 @@ class FarmController extends DefaultController {
         $deathRecord = array_map(function($d) {
             return $d[key($d)];
         }, $deathRecord);
-
+        
         $farm->round = !(count($fedRecord)) ? 1 : count($fedRecord);
         $farm->checkFedStatus();
+
+        if (!$farm->db->checkWin()) {
+            $farm->gameStatus = Farm::LOST;
+        }
 
         $finalRecord['record'] = $fedRecord;
         $finalRecord['dead_life'] = $deathRecord;

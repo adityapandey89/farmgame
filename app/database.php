@@ -79,4 +79,30 @@ class Database {
         return !empty($json) ? $json : [];
     }
 
+    /*
+     * Checking if the game is over and player has won or lost
+     * Criteria :- Alive FARMER, 1 Alive COW and 1 Alive Bunny
+     */
+
+    public function checkWin() {
+
+        $data = $this->getDeathRecord();
+        $data = array_map(function($d) {
+            return $d[key($d)];
+        }, $data);
+
+        if ($data) {
+            if (in_array("FARMER", $data)) {
+                return FALSE;
+            }
+            if (in_array("COW_1", $data) && in_array("COW_2", $data)) {
+                return FALSE;
+            }
+            if (in_array("BUNNY_1", $data) && in_array("BUNNY_2", $data) && in_array("BUNNY_4", $data) && in_array("BUNNY_4", $data)) {
+                return FALSE;
+            }
+        }
+        return true;
+    }
+
 }
