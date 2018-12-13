@@ -19,7 +19,7 @@ class FarmController extends DefaultController {
         }, $record);
 
         $tempLife = [];
-        $farm->round = count($record);
+        $farm->round = !(count($record)) ? 1 : count($record);
         foreach ($farm->farm_life as $life) {
             $tempLife[] = !($farm->checkLiveStatus($life)) ? $life : "";
         }
