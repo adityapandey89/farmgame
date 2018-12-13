@@ -18,8 +18,6 @@ http://localhost/farmgame/public
 
 **How to play**
 
-- All the FARM LIFE is highlighted as RED (this is a known bug to be will be fixed).
-
 - Click on feed button.
 
 - If FARMER is dead GAME OVER YOU LOST.
