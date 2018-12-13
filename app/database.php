@@ -10,6 +10,7 @@
 class Database {
 
     public $data;
+    public $death;
 
     public function __construct() {
 
@@ -23,22 +24,32 @@ class Database {
             fwrite($fp, json_encode(''));
             fclose($fp);
         }
+        if (!file_exists('../runtime/dead.json')) {
+            $fp = fopen('../runtime/dead.json', 'w');
+            fwrite($fp, json_encode(''));
+            fclose($fp);
+        }
     }
 
     public function addRecord() {
+
+        $oldData = $this->getRecord();
+        array_push($oldData, $this->data);
         $fp = fopen('../runtime/results.json', 'w');
-        fwrite($fp, json_encode($this->data));
+        fwrite($fp, json_encode($oldData));
         fclose($fp);
     }
 
     public function getRecord() {
+
         $str = file_get_contents('../runtime/results.json');
-        $json = json_decode($str, true); // decode the JSON into an associative array
+        $json = json_decode($str, true); // decode the JSON into an associative array        
         return !empty($json) ? $json : [];
     }
 
     public function deleteAllRecord() {
         unlink('../runtime/results.json');
+        unlink('../runtime/dead.json');
     }
 
     public function updateRecord() {
@@ -52,6 +63,20 @@ class Database {
             return 0;
 
         return $json;
+    }
+
+    public function addDeathRecord() {
+        $data = $this->getDeathRecord();
+        array_push($data, $this->death);
+        $fp = fopen('../runtime/dead.json', 'w');
+        fwrite($fp, json_encode($data));
+        fclose($fp);
+    }
+
+    public function getDeathRecord() {
+        $str = file_get_contents('../runtime/dead.json');
+        $json = json_decode($str, true); // decode the JSON into an associative array        
+        return !empty($json) ? $json : [];
     }
 
 }
