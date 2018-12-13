@@ -16,17 +16,17 @@ $> sudo chmod -R 777 runtime/
 
 http://localhost/farmgame/public
 
-# How to Play
+**How to play**
 
-All the FARM LIFE is highlighted as RED (this is a known bug need to be fixed).
+- All the FARM LIFE is highlighted as RED (this is a known bug to be will be fixed).
 
-Click on feed button.
+- Click on feed button.
 
-If FARMER is dead GAME OVER YOU LOST.
+- If FARMER is dead GAME OVER YOU LOST.
 
-If FARMER, atleast 1 COW and 1 BUNNY alive: after 50 feed you WIN.
+- If FARMER, atleast 1 COW and 1 BUNNY alive: after 50 feed you WIN.
 
-Click New Game Button to start again.
+- Click New Game Button to start again.
 
 # Farm Game
 **Objective**
