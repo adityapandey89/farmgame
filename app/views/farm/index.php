@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+  Created on : 12 Dec, 2018, 14 PM
+  Author     : groot (Aditya Pandey)
+  Description: The main view file to display the FARM GAME UI
 -->
+
 <html>
     <head>
         <title>Farm Game</title>

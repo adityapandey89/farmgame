@@ -1,5 +1,11 @@
 <?php
 
+/*
+  Created on : 12 Dec, 2018, 14 PM
+  Author     : groot (Aditya Pandey)
+  Description: Base class to initialize and make the controller/models/views work
+ */
+
 class App {
 
     protected $controller = 'farm';
@@ -12,7 +18,7 @@ class App {
 
         $this->controller = ucfirst($this->controller) . "Controller";
         $url = $this->parseUrl();
-        unset($url[0]); // getting rid of public
+        unset($url[0]); // getting rid of public folder in path
 
         if (file_exists("../app/controllers/" . ucfirst($url[1]) . "Controller.php")) {
             $this->controller = ucfirst($url[1]) . "Controller";

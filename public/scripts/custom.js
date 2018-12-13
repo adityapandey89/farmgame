@@ -1,9 +1,8 @@
 /* 
- Created on : 12 Dec, 2018, 14:12:51 PM
+ Created on : 12 Dec, 2018, 14 PM
  Author     : groot (Aditya Pandey)
  Description: Custom Script
  */
-
 
 $(document).ready(function () {
 

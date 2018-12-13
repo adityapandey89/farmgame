@@ -1,5 +1,11 @@
 <?php
 
+/*
+  Created on : 12 Dec, 2018, 14 PM
+  Author     : groot (Aditya Pandey)
+  Description: Farm model file to manage data level operations
+ */
+
 class Farm {
 
     public $farm_life = ['FARMER', 'COW_1', 'COW_2', 'BUNNY_1', 'BUNNY_2', 'BUNNY_3', 'BUNNY_4'];

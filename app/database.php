@@ -1,5 +1,12 @@
 <?php
 
+/*
+  Created on : 12 Dec, 2018, 14 PM
+  Author     : groot (Aditya Pandey)
+  Description: Simple Database Class to have some basic db operations
+ * used JSON file to save data
+ */
+
 class Database {
 
     public $data;
@@ -7,7 +14,7 @@ class Database {
     public function __construct() {
 
         if (!file_exists("../runtime")) {
-            echo "Please create a runtime Folder under your root dir";
+            echo "Please create a runtime Folder under your root dir, with write permission";
             die;
         }
 

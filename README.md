@@ -1,3 +1,31 @@
+#############################################################################################
+
+ENVIRONMENT USED FOR DEVELOPMENT :- UBUNTU 18.04, PHP 7, JSON, APACHE, CHROME BROWSER as a client
+
+
+# Installation process
+
+execute from command line
+
+$> git clone https://github.com/adityapandey89/farmgame.git
+$> cd /var/www/html/farmgame
+$> mkdir runtime
+$> sudo chmod -R 777 runtime/
+
+From your client browser
+
+http://localhost/farmgame/public
+
+How to Play
+
+# All the FARM LIFE is highlighted as RED (this is a known bug to be will be fixed)
+# Click on feed button
+# If FARMER is dead GAME OVER YOU LOST
+# If FARMER, atleast 1 COW and 1 BUNNY alive: after 50 feed you WIN
+# Click New Game Button to start again
+
+#############################################################################################
+
 # Farm Game
 **Objective**
 
