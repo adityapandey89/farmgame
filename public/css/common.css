@@ -1,0 +1,21 @@
+/* 
+ Created on : 12 Dec, 2018, 14:13:26 PM
+ Author     : groot (Aditya Pandey)
+ Description: Custom Style
+*/
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    /*background-color: #cccccc;*/
+}
+
+.feed_table img{
+    width: 100px;
+    height: 100px;
+}
+
+td{
+    text-align: center;
+}
