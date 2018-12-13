@@ -28,10 +28,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <a href="#" class="btn btn-primary" id="newGame">New Game</a>
+                    <button class="btn btn-primary" id="newGame">New Game</button>
                 </div>
                 <div class="col-md-3">
-                    <a href="#" class="btn btn-success" id="feed">Feed</a>
+                    <button class="btn btn-success" id="feed">Feed</button>
                 </div>
             </div>
             <br/>

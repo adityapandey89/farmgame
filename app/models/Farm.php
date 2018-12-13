@@ -29,7 +29,6 @@ class Farm {
         $tempData = [];
         $newData = [];
         $finalData = [];
-//        $this->db = new Database();
         $rnd = $this->db->getTotalRound();
         $this->round = !($rnd) ? 1 : count($rnd);
         $this->checkFedStatus();
@@ -86,29 +85,15 @@ class Farm {
                 $this->gameStatus = self::LOST;
                 return false;
             }
-            if (preg_match("/COW_1/", $life) && $this->round >= (self::COWFEEDTIME * ceil($this->round / self::COWFEEDTIME))) {
-                unset($this->farm_life[1]);
+            if (preg_match("/COW_(\d+)/", $life, $m) && $this->round >= (self::COWFEEDTIME * ceil($this->round / self::COWFEEDTIME))) {
+                $key = array_search(trim($life), $farm->farm_life);
+                unset($this->farm_life[$key]);
                 return false;
             }
-            if (preg_match("/COW_2/", $life) && $this->round >= (self::COWFEEDTIME * ceil($this->round / self::COWFEEDTIME))) {
-                unset($this->farm_life[2]);
+            if (preg_match("/BUNNY_(\d+)/", $life, $m) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
+                $key = array_search(trim($life), $farm->farm_life);
+                unset($this->farm_life[$key]);
                 return false;
-            }
-            if (preg_match("/BUNNY_1/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
-                unset($this->farm_life[3]);
-                return false;
-            }
-            if (preg_match("/BUNNY_2/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
-                unset($this->farm_life[4]);
-                return false;
-            }
-            if (preg_match("/BUNNY_3/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
-                unset($this->farm_life[5]);
-                return FALSE;
-            }
-            if (preg_match("/BUNNY_4/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
-                unset($this->farm_life[6]);
-                return FALSE;
             }
         } else {
             return true;
