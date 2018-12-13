@@ -29,14 +29,13 @@ class Farm {
         $tempData = [];
         $newData = [];
         $finalData = [];
-        $this->db = new Database();
-        $totalRound = !($this->db->getTotalRound()) ? 0 : count($this->db->getTotalRound());
-        $totalRound++;
-        $this->round = $totalRound;
+//        $this->db = new Database();
+        $rnd = $this->db->getTotalRound();
+        $this->round = !($rnd) ? 1 : count($rnd);
         $this->checkFedStatus();
         $this->fedLife = array_rand($this->farm_life);
 
-        $newData[$totalRound] = $this->farm_life[$this->fedLife];
+        $newData[$this->round] = $this->farm_life[$this->fedLife];
         $tempData = $this->db->getRecord();
         array_push($tempData, $newData);
         $this->db->data = $tempData;
@@ -47,7 +46,7 @@ class Farm {
             return;
         }
 
-        if ($totalRound == self::TOTALFEED) {
+        if ((int) $this->round == self::TOTALFEED) {
             $this->gameStatus = self::WON;
             return;
         }
@@ -82,34 +81,34 @@ class Farm {
         }
 
         if (!in_array($life, $record)) {
-            if (preg_match("/FARMER/", $life) && $this->round >= (15 * ceil($this->round / 15))) {
+            if (preg_match("/FARMER/", $life) && $this->round >= (self::FARMERFEEDTIME * ceil($this->round / self::FARMERFEEDTIME))) {
                 unset($this->farm_life[0]);
                 $this->gameStatus = self::LOST;
                 return false;
             }
-            if (preg_match("/COW_1/", $life) && $this->round >= (10 * ceil($this->round / 10))) {
+            if (preg_match("/COW_1/", $life) && $this->round >= (self::COWFEEDTIME * ceil($this->round / self::COWFEEDTIME))) {
                 unset($this->farm_life[1]);
                 return false;
             }
-            if (preg_match("/COW_2/", $life) && $this->round >= (10 * ceil($this->round / 10))) {
+            if (preg_match("/COW_2/", $life) && $this->round >= (self::COWFEEDTIME * ceil($this->round / self::COWFEEDTIME))) {
                 unset($this->farm_life[2]);
                 return false;
             }
-            if (preg_match("/BUNNY_1/", $life) && $this->round >= (8 * ceil($this->round / 8))) {
+            if (preg_match("/BUNNY_1/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
                 unset($this->farm_life[3]);
                 return false;
             }
-            if (preg_match("/BUNNY_2/", $life) && $this->round >= (8 * ceil($this->round / 8))) {
+            if (preg_match("/BUNNY_2/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
                 unset($this->farm_life[4]);
                 return false;
             }
-            if (preg_match("/BUNNY_3/", $life) && $this->round >= (8 * ceil($this->round / 8))) {
+            if (preg_match("/BUNNY_3/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
                 unset($this->farm_life[5]);
-                return TRUE;
+                return FALSE;
             }
-            if (preg_match("/BUNNY_4/", $life) && $this->round >= (8 * ceil($this->round / 8))) {
+            if (preg_match("/BUNNY_4/", $life) && $this->round >= (self::BUNNIESFEEDTIME * ceil($this->round / self::BUNNIESFEEDTIME))) {
                 unset($this->farm_life[6]);
-                return;
+                return FALSE;
             }
         } else {
             return true;

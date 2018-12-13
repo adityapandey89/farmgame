@@ -31,10 +31,10 @@ class FarmController extends DefaultController {
 
     public function feed() {
         $farm = $this->model('Farm');
-        $db = new Database();
+        $farm->db = new Database();
         $farm->randomFeed();
         if ($farm->gameStatus == Farm::PROGRESS) {
-            echo json_encode([$farm->fedLife, count($db->getRecord())]);
+            echo json_encode([$farm->fedLife, count($farm->db->getRecord())]);
         } else {
             echo $farm->gameStatus;
         }
